@@ -15,6 +15,10 @@ This project includes two primary workflows (notebooks) and corresponding model 
 Note: the current `demo.py` and `streamlit_app.py` are wired to the PyTorch `.pth` checkpoints by default.
 
 ---
+## License
+
+This project is licensed under the MIT License — see [LICENSE](LICENSE) for details.
+
 
 ## Features
 

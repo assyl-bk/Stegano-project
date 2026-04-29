@@ -182,32 +182,6 @@ Make sure both are in project root:
 
 ---
 
-## Suggested GitHub Repo Structure
-
-```text
-Stego-project/
-  .venv/                 (optional, usually ignored)
-  results/
-  binary_model.pth
-  multiclass_model.pth
-  demo.py
-  streamlit_app.py
-  cyber-fixed.ipynb
-  README.md
-  .gitignore
-```
-
-Recommended `.gitignore` additions:
-
-```gitignore
-.venv/
-__pycache__/
-*.pyc
-.streamlit/
-```
-
----
-
 ## Future Improvements
 
 - Add confidence-threshold configuration for binary decision

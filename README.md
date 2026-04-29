@@ -6,16 +6,13 @@ A local steganography lab that supports:
 - Message extraction (with technique-aware decoding and fallback)
 - Web UI with Streamlit for interactive testing
 
-This project uses two pretrained PyTorch checkpoints:
-- `binary_model.pth` for clean vs stego classification
-- `multiclass_model.pth` for technique classification
+This project includes two primary workflows (notebooks) and corresponding model artifacts:
 
-These PyTorch checkpoints are used with the `cyber-fixed` workflow/notebook.
+- `cyber-fixed` (PyTorch): EfficientNet-B2 backbone with a small custom classifier head. The repository uses `torchvision.models.efficientnet_b2` (no pretrained weights) and replaces the final classifier with a dropout + 256-dense hidden layer followed by the output layer. Checkpoints: `binary_model.pth` (binary clean vs stego) and `multiclass_model.pth` (technique classification). These are the models loaded by `cyber-fixed.ipynb`, `demo.py`, and `streamlit_app.py`.
 
-Optional additional model artifact in this repo:
-- `model_final_7classes.keras` (and `model_final_7classes.h5`) can be tested separately if you want to experiment with a different 7-class model pipeline.
-  These Keras models are intended for the `cyber-fixed-2` notebook workflow.
-  Note: the current `demo.py` and `streamlit_app.py` are wired to the PyTorch `.pth` checkpoints by default.
+- `cyber-fixed-2` (Keras/TensorFlow): a custom convolutional neural network implemented with `tensorflow.keras` for 7-class classification. The notebook defines a `Sequential` model with an input of shape `(128, 128, 12)` (feature channels extracted from SRM, LSB, DCT, FFT and stats), three downsampling convolutional blocks (64 → 128 → 256 filters, each with BatchNorm, ReLU and MaxPooling), followed by GlobalAveragePooling, Dense layers (512 → 256) with dropout and a final `NUM_CLASSES` softmax output. Trained artifacts: `model_final_7classes.keras` and `model_final_7classes.h5` (H5 export).
+
+Note: the current `demo.py` and `streamlit_app.py` are wired to the PyTorch `.pth` checkpoints by default.
 
 ---
 
@@ -51,6 +48,7 @@ Optional additional model artifact in this repo:
 - `model_final_7classes.h5` - optional alternative 7-class Keras model (H5 format)
 - `results/` - generated output images
 - `cyber-fixed.ipynb` - notebook workflow used during development
+- `cyber-fixed-2.ipynb` - alternative notebook demonstrating the Keras/TensorFlow 7-class workflow
 
 ---
 
@@ -190,7 +188,3 @@ Make sure both are in project root:
 - Add unit tests for each encoder/decoder pair
 
 ---
-
-## License
-
-Add a license file before publishing publicly (for example MIT).
